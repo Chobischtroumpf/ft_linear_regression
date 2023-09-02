@@ -1,5 +1,5 @@
-import numpy as np
-import matplotlib as mpl
+# import numpy as np
+# import matplotlib as mpl
 
 def read_theta():
     """
@@ -8,10 +8,11 @@ def read_theta():
             theta0 (float): The theta0 value.
             theta1 (float): The theta1 value.
     """
-    with open("theta.txt", "r") as f:
-        theta0 = float(f.readline())
-        theta1 = float(f.readline())
-    except:
+    try :
+        with open("theta.txt", "r") as f:
+            theta0 = float(f.readline())
+            theta1 = float(f.readline())
+    except Exception:
         print("Error: theta.txt not found")
     return theta0, theta1
 
@@ -36,4 +37,16 @@ def  estimatePrice(mileage):
     """
     return theta0 + theta1 * mileage
 
+def main():
+    print("what mileage does your car have ?")
+    mileage = None
+    ask_again = True
+    while ask_again:
+        try:
+            mileage = float(input(" car's mileage: ").strip().lstrip())
+            ask_again = False
+        except Exception:
+            print("mileage has to be a number, ")
 
+if __name__ == "__main__":
+    main()
