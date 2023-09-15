@@ -1,5 +1,4 @@
-# import numpy as np
-# import matplotlib as mpl
+import json
 
 def read_theta():
     """
@@ -10,11 +9,12 @@ def read_theta():
     """
     try :
         with open("theta.txt", "r") as f:
-            theta0 = float(f.readline())
-            theta1 = float(f.readline())
+            theta = json.load(f)
+            if len(theta) != 2:
+                raise
     except Exception:
-        print("Error: theta.txt not found")
-    return theta0, theta1
+        print("Error: theta.txt not found or badly formated")
+    return theta["theta0"], theta["theta1"]
 
 def write_theta(theta0, theta1):
     """
@@ -23,11 +23,13 @@ def write_theta(theta0, theta1):
             theta0 (float): The theta0 value.
             theta1 (float): The theta1 value.
     """
-    with open("theta.txt", "w") as f:
-        f.write(str(theta0) + "\n")
-        f.write(str(theta1) + "\n")
+    try:
+        with open("theta.txt", "w") as f:
+            json.dump({"theta0": theta0, "theta1": theta1}, fp)
+    except Exception as e:
+        print(e)
 
-def  estimatePrice(mileage):
+def  normalisedEstimatePrice(mileage):
     """
         Estimate the price of a car based on mileage.
         Args:
